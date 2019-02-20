@@ -72,12 +72,32 @@ def IntCalc(input) :
 def IntegerCalc(input) :
     result = ""
     #############################
-    result = IntCalc(input)
+    # 괄호 처리
+    charStack=[]
+    inBrace=""
+    for i in range(len(input)):
+        if input[i] == ')':
+            while True:
+                temp=charStack.pop(-1)
+                if temp == '(':
+                    dc=IntCalc(inBrace)
+                    charStack+=dc
+                    inBrace=""
+                    break
+                else:
+                    inBrace=temp+inBrace
+        else:
+            charStack+=input[i]
+    str=""
+    for i in range(len(charStack)):
+        str=str+charStack[i]
+
+    result = IntCalc(str)
     #############################
     return result
 
 def main():
-    input = "-2+5*7+19/2+1"
+    input = "-2+5*7+19/((2+1)*(2+1))"
     result = IntegerCalc(input)
     print(result)
 
@@ -86,3 +106,4 @@ if __name__ == "__main__" :
 
 
 print(input)
+
